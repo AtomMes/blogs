@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "name": "atom",
+      "email": "atom@mail.ru",
+      "password": "11112222",
+      "img": null,
+      "id": "3a1485ec-5538-4fff-82a3-dd42b2dcb933"
+    }
+  ],
+  "blogs": [
+    {
+      "title": "asda",
+      "description": "sdasd",
+      "authorId": "3a1485ec-5538-4fff-82a3-dd42b2dcb933",
+      "id": "7ec62b51-bdea-4a12-b302-b699ce76d69d",
+      "date": "Thu Nov 30 2023 00:54:24 GMT-0800 (Pacific Standard Time)"
+    },
+    {
+      "title": "a",
+      "description": "s",
+      "authorId": "3a1485ec-5538-4fff-82a3-dd42b2dcb933",
+      "id": "b513c20a-9509-4cfb-9c9f-ff4913ed905a",
+      "date": "Thu Nov 30 2023 00:55:55 GMT-0800 (Pacific Standard Time)"
+    },
+    {
+      "title": "asdf",
+      "description": "asdfasd",
+      "authorId": "3a1485ec-5538-4fff-82a3-dd42b2dcb933",
+      "id": "25446797-cacd-4dc1-8514-ef48e20a3587",
+      "date": "Thu Nov 30 2023 01:05:35 GMT-0800 (Pacific Standard Time)"
+    }
+  ],
+  "likes": [],
+  "comments": []
+}
