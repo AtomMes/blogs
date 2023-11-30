@@ -1,13 +1,13 @@
 <script setup>
-import {maxLength, required} from '@vuelidate/validators';
-import useVuelidate from '@vuelidate/core';
-import {computed, reactive, toRefs} from 'vue';
-import blogService from '@/services/blogService';
-import {blogDescriptionError, blogTitleError} from '@/assets/errorMessages';
-import BaseInput from '@/components/BaseInput.vue';
+import { maxLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import { computed, reactive, toRefs } from "vue";
+import blogService from "@/services/blogService";
+import { blogDescriptionError, blogTitleError } from "@/assets/errorMessages";
+import BaseInput from "@/components/BaseInput.vue";
 
-const props = defineProps(['blog', 'editMode']);
-const emit = defineEmits(['closeEditMode']);
+const props = defineProps(["blog", "editMode"]);
+const emit = defineEmits(["closeEditMode"]);
 
 const updatedBlog = reactive({
   title: props.blog.title,
@@ -43,7 +43,7 @@ const save = async () => {
       if (
         updatedBlog[key] === null ||
         !updatedBlog[key].length ||
-        !updatedBlog[key].split(' ').join('')
+        !updatedBlog[key].split(" ").join("")
       ) {
         delete updatedBlog[key];
       }
@@ -52,20 +52,21 @@ const save = async () => {
       await blogService.updateBlog(updatedBlog.id, updatedBlog);
       props.blog.title = updatedBlog.title;
       props.blog.description = updatedBlog.description;
-      emit('closeEditMode');
+      emit("closeEditMode");
     }
   }
 };
-
 </script>
 
 <template>
   <div v-if="editMode">
-    <div class="fixed top-0 z-20 left-0 flex items-center justify-center h-[100vh] w-[100vw] bg-[#00000044]"
-         @click="$emit('closeEditMode')"
+    <div
+      class="fixed top-0 z-20 left-0 flex items-center justify-center h-[100vh] w-[100vw] bg-[#00000044]"
+      @click="$emit('closeEditMode')"
+    ></div>
+    <div
+      class="bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl max-w-xl w-full"
     >
-    </div>
-    <div class="bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl max-w-xl w-full">
       <div class="flex px-4 justify-end w-full relative py-4 border-b">
         <p
           class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] text-[20px] font-bold"
@@ -99,7 +100,9 @@ const save = async () => {
         <div>
           <BaseInput
             :class="{ 'border-red-500': v$.description.$error }"
-            @update:input-value="(newValue) => (v$.description.$model = newValue)"
+            @update:input-value="
+              (newValue) => (v$.description.$model = newValue)
+            "
             :input-value="v$.description.$model"
             label="Description"
             placeholder="Write more details about it"

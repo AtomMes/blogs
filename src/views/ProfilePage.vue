@@ -1,13 +1,13 @@
 <script setup>
-import {useRoute, useRouter} from 'vue-router';
-import {ref, watchEffect} from 'vue';
-import userService from '@/services/userService';
-import blogService from '@/services/blogService';
-import Blog from '@/components/Blog/Blog.vue';
-import {useUserStore} from '@/stores/userStore';
-import EditProfile from '@/components/EditProfile.vue';
-import UserImage from '@/components/UserImage.vue';
-import LoadingCircle from '@/components/LoadingCircle.vue';
+import { useRoute, useRouter } from "vue-router";
+import { ref, watchEffect } from "vue";
+import userService from "@/services/userService";
+import blogService from "@/services/blogService";
+import Blog from "@/components/Blog/Blog.vue";
+import { useUserStore } from "@/stores/userStore";
+import EditProfile from "@/components/EditProfile.vue";
+import UserImage from "@/components/UserImage.vue";
+import LoadingCircle from "@/components/LoadingCircle.vue";
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -40,7 +40,7 @@ const updateUser = async () => {
       });
       loading.value = false;
     } catch (err) {
-      await router.push({ name: 'home' });
+      await router.push({ name: "home" });
     }
   }
   loading.value = false;
@@ -53,9 +53,9 @@ watchEffect(() => {
 });
 
 const logOut = () => {
-  router.push({ name: 'login' });
+  router.push({ name: "login" });
   userStore.logOut();
-  localStorage.removeItem('user');
+  localStorage.removeItem("user");
 };
 
 const toggleEdit = () => {
@@ -162,8 +162,7 @@ const toggleEdit = () => {
             The user you are looking for doesn't exist
             <router-link to="/" class="text-emerald-500 underline font-semibold"
             >go back
-            </router-link
-            >
+            </router-link>
           </p>
         </div>
       </template>

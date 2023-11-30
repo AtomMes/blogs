@@ -1,13 +1,13 @@
 <script setup>
-import {computed, reactive} from 'vue';
-import blogService from '@/services/blogService';
-import {v4 as uuidv4} from 'uuid';
-import {useUserStore} from '@/stores/userStore';
-import {useRouter} from 'vue-router';
-import {maxLength, required} from '@vuelidate/validators';
-import useVuelidate from '@vuelidate/core';
-import BaseInput from '@/components/BaseInput.vue';
-import {blogDescriptionError, blogTitleError} from '@/assets/errorMessages';
+import { computed, reactive } from "vue";
+import blogService from "@/services/blogService";
+import { v4 as uuidv4 } from "uuid";
+import { useUserStore } from "@/stores/userStore";
+import { useRouter } from "vue-router";
+import { maxLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import BaseInput from "@/components/BaseInput.vue";
+import { blogDescriptionError, blogTitleError } from "@/assets/errorMessages";
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -43,7 +43,7 @@ const createBlog = () => {
   v$.value.$touch();
   if (!v$.value.$error) {
     blogService.create({ ...blog, id: uuidv4(), date: Date() }).then((res) => {
-      router.push({ name: 'full-blog', params: { id: res.data.id } });
+      router.push({ name: "full-blog", params: { id: res.data.id } });
     });
   }
 };

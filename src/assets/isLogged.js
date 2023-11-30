@@ -1,3 +1,3 @@
 export const logged = () => {
-    return !!localStorage.getItem('user');
-}
+    return !!localStorage.getItem("user");
+};

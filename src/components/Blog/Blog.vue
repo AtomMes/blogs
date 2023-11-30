@@ -1,18 +1,18 @@
 <script setup>
-import {computed, ref, watchEffect} from 'vue';
-import userService from '@/services/userService';
-import {useUserStore} from '@/stores/userStore';
-import blogService from '@/services/blogService';
-import {v4 as uuidv4} from 'uuid';
-import {useRoute} from 'vue-router';
-import BlogSkeleton from '@/components/Blog/BlogSkeleton.vue';
-import BlogCommentSection from '@/components/Blog/BlogCommentSection.vue';
-import BlogActions from '@/components/Blog/BlogActions.vue';
-import BlogInfo from '@/components/Blog/BlogInfo.vue';
-import EditBlog from '@/components/Blog/EditBlog.vue';
+import { computed, ref, watchEffect } from "vue";
+import userService from "@/services/userService";
+import { useUserStore } from "@/stores/userStore";
+import blogService from "@/services/blogService";
+import { v4 as uuidv4 } from "uuid";
+import { useRoute } from "vue-router";
+import BlogSkeleton from "@/components/Blog/BlogSkeleton.vue";
+import BlogCommentSection from "@/components/Blog/BlogCommentSection.vue";
+import BlogActions from "@/components/Blog/BlogActions.vue";
+import BlogInfo from "@/components/Blog/BlogInfo.vue";
+import EditBlog from "@/components/Blog/EditBlog.vue";
 
-const props = defineProps(['blog']);
-const emit = defineEmits(['deleteBlog']);
+const props = defineProps(["blog"]);
+const emit = defineEmits(["deleteBlog"]);
 const userStore = useUserStore();
 const route = useRoute();
 
@@ -77,7 +77,7 @@ const addComment = async () => {
       authorId: userStore.user.id,
       blogId: props.blog.id,
       comment: commentMessage.value,
-      date: Date()
+      date: Date(),
     });
     commentMessage.value = null;
     await getComments();
@@ -86,22 +86,21 @@ const addComment = async () => {
 };
 
 const commentExists = computed(() => {
-  return !!commentMessage.value && !!commentMessage.value.split(' ').join('');
+  return !!commentMessage.value && !!commentMessage.value.split(" ").join("");
 });
 
 const deleteBlog = async () => {
-  console.log('ekav')
-  const sure = confirm('Are you sure you want to delete this blog?');
+  const sure = confirm("Are you sure you want to delete this blog?");
   if (sure) {
     await blogService.deleteBlog(props.blog.id);
-    emit('deleteBlog', props.blog.id);
+    emit("deleteBlog", props.blog.id);
   }
 };
 
 watchEffect(async () => {
   myProfile.value =
-    route.name === 'profile' && route.params.id === userStore.user.id;
-  profile.value = route.name === 'profile';
+    route.name === "profile" && route.params.id === userStore.user.id;
+  profile.value = route.name === "profile";
   loading.value = true;
   const response = await userService.getUserById(props.blog.authorId);
   author.value = response.data[0];
@@ -120,7 +119,11 @@ watchEffect(async () => {
 
 <template>
   <template v-if="!loading">
-    <EditBlog :blog="blog" :editMode="editMode" @close-edit-mode="editMode = false" />
+    <EditBlog
+      :blog="blog"
+      :editMode="editMode"
+      @close-edit-mode="editMode = false"
+    />
     <div
       v-if="profile && visibleComments"
       class="fixed w-full h-full bg-[#00000044] bg-r z-40 top-0 left-0"
@@ -187,9 +190,7 @@ watchEffect(async () => {
     />
   </template>
   <template v-else>
-    <BlogSkeleton
-      :class="profile && 'max-w-full md:max-w-[50%] w-full px-2'"
-    />
+    <BlogSkeleton :class="profile && 'max-w-full md:max-w-[50%] w-full px-2'" />
     <div
       class="h-[1px] my-3 mx-3 md:max-w-[40%] w-full bg-gray-200 last:hidden md:hidden"
       :class="!profile && 'hidden'"

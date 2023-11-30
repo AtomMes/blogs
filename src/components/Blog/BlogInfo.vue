@@ -1,16 +1,23 @@
 <script setup>
-import Author from '@/components/Author.vue';
-import {useRoute} from 'vue-router';
-import {ref, watchEffect} from 'vue';
+import Author from "@/components/Author.vue";
+import { useRoute } from "vue-router";
+import { ref, watchEffect } from "vue";
 
-const props = defineProps(['author', 'profile', 'visibleComments', 'myProfile', 'blog']);
+const props = defineProps([
+  "author",
+  "profile",
+  "visibleComments",
+  "myProfile",
+  "blog",
+]);
 const expanded = ref(false);
 const route = useRoute();
 
 watchEffect(() => {
-  expanded.value = route.name === 'full-blog';
+  expanded.value = route.name === "full-blog";
 });
-const date = props.blog.date.split(' ')[1] + " " + props.blog.date.split(' ')[2]
+const date =
+  props.blog.date.split(" ")[1] + " " + props.blog.date.split(" ")[2];
 </script>
 
 <template>

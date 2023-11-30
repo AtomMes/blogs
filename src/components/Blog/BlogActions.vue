@@ -2,7 +2,7 @@
 import LoadingCircle from "@/components/LoadingCircle.vue";
 import CommentIcon from "@/icons/CommentIcon.vue";
 import BlogLike from "@/components/Blog/BlogLike.vue";
-import Edit from '@/icons/Edit.vue';
+import Edit from "@/icons/Edit.vue";
 
 defineProps([
   "likeLoading",
@@ -52,7 +52,11 @@ const emit = defineEmits(["onLike", "openComments", "openEditMode"]);
       :to="{ name: 'full-blog', params: { id: blogId } }"
       class="w-full h-7"
     />
-    <button v-show="myProfile" @click="emit('openEditMode')" class="self-center" >
+    <button
+      v-show="myProfile"
+      @click="emit('openEditMode')"
+      class="self-center"
+    >
       <Edit />
     </button>
   </div>

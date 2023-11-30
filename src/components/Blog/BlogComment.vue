@@ -11,7 +11,8 @@ watchEffect(async () => {
   commentAuthor.value = dbAuthor.data[0];
 });
 
-const date = props.comment.date.split(' ')[1] + " " + props.comment.date.split(' ')[2]
+const date =
+  props.comment.date.split(" ")[1] + " " + props.comment.date.split(" ")[2];
 </script>
 
 <template>

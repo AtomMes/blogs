@@ -21,9 +21,7 @@ watchEffect(() => {
     @input="$emit('update:modelValue', $event.target.value)"
   />
   <div v-if="!loading && !blogs.length" class="w-full pt-16">
-    <div
-      class="w-fit mx-auto px-4 py-2 border border-gray-300 rounded flex"
-    >
+    <div class="w-fit mx-auto px-4 py-2 border border-gray-300 rounded flex">
       <p>
         There's no posts yet, go ahead and
         <router-link

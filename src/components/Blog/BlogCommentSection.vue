@@ -1,8 +1,8 @@
 <script setup>
-import BlogComment from '@/components/Blog/BlogComment.vue';
+import BlogComment from "@/components/Blog/BlogComment.vue";
 
-defineProps(['comments', 'commentMessage', 'commentExists']);
-defineEmits(['update:commentMessage', 'addComment']);
+defineProps(["comments", "commentMessage", "commentExists"]);
+defineEmits(["update:commentMessage", "addComment"]);
 </script>
 <template>
   <div class="flex justify-between items-center border-b pb-1">
@@ -23,6 +23,10 @@ defineEmits(['update:commentMessage', 'addComment']);
     </button>
   </div>
   <div class="flex flex-col-reverse gap-1 max-h-[500px] overflow-auto">
-    <BlogComment v-for="comment in comments" :comment="comment" :key="comment.id" />
+    <BlogComment
+      v-for="comment in comments"
+      :comment="comment"
+      :key="comment.id"
+    />
   </div>
 </template>

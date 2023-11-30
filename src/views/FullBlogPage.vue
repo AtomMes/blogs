@@ -1,8 +1,8 @@
 <script setup>
-import {useRoute, useRouter} from 'vue-router';
-import {ref, watchEffect} from 'vue';
-import blogService from '@/services/blogService';
-import Blog from '@/components/Blog/Blog.vue';
+import { useRoute, useRouter } from "vue-router";
+import { ref, watchEffect } from "vue";
+import blogService from "@/services/blogService";
+import Blog from "@/components/Blog/Blog.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -39,8 +39,7 @@ watchEffect(() => {
             The blog you are looking for doesn't exist
             <router-link to="/" class="text-emerald-500 underline font-semibold"
             >go back
-            </router-link
-            >
+            </router-link>
           </p>
         </div>
       </template>

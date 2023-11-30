@@ -4,7 +4,7 @@ defineProps([
   "inputValue",
   "placeholder",
   "errorMessage",
-  "showError"
+  "showError",
 ]);
 defineEmits(["update:inputValue"]);
 </script>

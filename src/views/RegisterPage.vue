@@ -1,13 +1,13 @@
 <script setup>
-import {computed, reactive, ref} from 'vue';
-import {v4 as uuidv4} from 'uuid';
-import userService from '@/services/userService';
-import {useUserStore} from '@/stores/userStore';
-import {useRouter} from 'vue-router';
-import {email, maxLength, minLength, required} from '@vuelidate/validators';
-import useVuelidate from '@vuelidate/core';
-import BaseInput from '@/components/BaseInput.vue';
-import {mailError, nameError, passwordError} from '@/assets/errorMessages';
+import { computed, reactive, ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
+import userService from "@/services/userService";
+import { useUserStore } from "@/stores/userStore";
+import { useRouter } from "vue-router";
+import { email, maxLength, minLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import BaseInput from "@/components/BaseInput.vue";
+import { mailError, nameError, passwordError } from "@/assets/errorMessages";
 
 const userState = useUserStore();
 const router = useRouter();
@@ -55,8 +55,8 @@ const onSubmit = async () => {
       await userService.register(constructUser(user)).then((res) => {
         if (res) {
           userState.setUser(res.data);
-          localStorage.setItem('user', JSON.stringify(res.data));
-          router.push({ name: 'profile', params: { id: res.data.id } });
+          localStorage.setItem("user", JSON.stringify(res.data));
+          router.push({ name: "profile", params: { id: res.data.id } });
         }
       });
     } else {
@@ -75,7 +75,6 @@ const passwordErrorMessage = computed(() => {
 const nameErrorMessage = computed(() => {
   return nameError(user.name);
 });
-
 </script>
 <template>
   <div
@@ -142,7 +141,9 @@ const nameErrorMessage = computed(() => {
           @blur="v$.password.$touch()"
           @input="v$.password.$reset()"
         />
-        <p class="text-red-500" v-if="userExists">*The email address is already in use</p>
+        <p class="text-red-500" v-if="userExists">
+          *The email address is already in use
+        </p>
       </div>
       <div class="flex justify-end w-full relative mt-4">
         <button
@@ -156,8 +157,7 @@ const nameErrorMessage = computed(() => {
         Already have an account?
         <router-link :to="{ name: 'login' }" class="font-semibold underline"
         >Login
-        </router-link
-        >
+        </router-link>
       </p>
     </form>
   </div>

@@ -1,18 +1,18 @@
 <script setup>
-import {computed, reactive, ref} from 'vue';
-import userService from '@/services/userService';
-import {useUserStore} from '@/stores/userStore';
-import router from '@/router';
-import {email, maxLength, minLength, required} from '@vuelidate/validators';
-import useVuelidate from '@vuelidate/core';
-import BaseInput from '@/components/BaseInput.vue';
-import {mailError, passwordError} from '@/assets/errorMessages';
+import { computed, reactive, ref } from "vue";
+import userService from "@/services/userService";
+import { useUserStore } from "@/stores/userStore";
+import router from "@/router";
+import { email, maxLength, minLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import BaseInput from "@/components/BaseInput.vue";
+import { mailError, passwordError } from "@/assets/errorMessages";
 
 const userState = useUserStore();
 
 const user = reactive({
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 });
 const show = ref(false);
 const notUser = ref(false);
@@ -33,15 +33,15 @@ const v$ = useVuelidate(rules, user);
 
 const onSubmit = async () => {
   v$.value.$touch();
-    notUser.value = false
+  notUser.value = false;
   if (!v$.value.$error) {
     await userService.login(user).then((res) => {
       if (res?.data[0]) {
         userState.setUser(res.data[0]);
-        localStorage.setItem('user', JSON.stringify(res.data[0]));
-        router.push({ name: 'profile', params: { id: res.data[0].id } });
+        localStorage.setItem("user", JSON.stringify(res.data[0]));
+        router.push({ name: "profile", params: { id: res.data[0].id } });
       } else {
-        notUser.value = true
+        notUser.value = true;
       }
     });
   }
@@ -106,7 +106,9 @@ const passwordErrorMessage = computed(() => {
           @blur="v$.password.$touch()"
           @input="v$.password.$reset()"
         />
-      <p v-if="notUser" class="text-red-500">*Incorrect email address or password</p>
+        <p v-if="notUser" class="text-red-500">
+          *Incorrect email address or password
+        </p>
       </div>
       <div class="flex justify-end w-full relative mt-4">
         <button
@@ -120,8 +122,7 @@ const passwordErrorMessage = computed(() => {
         Don't have an account?
         <router-link :to="{ name: 'register' }" class="font-semibold underline"
         >Register
-        </router-link
-        >
+        </router-link>
       </p>
     </form>
   </div>

@@ -1,8 +1,6 @@
 {
-  "users": [
-  ],
-  "blogs": [
-  ],
+  "users": [],
+  "blogs": [],
   "likes": [],
   "comments": []
 }
