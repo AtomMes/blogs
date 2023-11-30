@@ -64,7 +64,9 @@ router.beforeEach(async (to, from, next) => {
     !logged() &&
     to.name !== "login" &&
     to.name !== "register" &&
-    to.name !== "network-issue"
+    to.name !== "network-issue" &&
+    to.name !== "home" &&
+    to.name !== "full-blog"
   ) {
     next({ name: "login" });
   } else {

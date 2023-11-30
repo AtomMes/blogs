@@ -1,6 +1,23 @@
 {
-  "users": [],
-  "blogs": [],
+  "users": [
+    {
+      "name": "atom",
+      "email": "atom@mail.ru",
+      "password": "11112222",
+      "img": null,
+      "id": "fe10ffdb-fa2b-4676-b5d4-06994cc5c124"
+    }
+  ],
+  "blogs": [
+    {
+      "title": "title of the blog",
+      "description": "description",
+      "authorId": "fe10ffdb-fa2b-4676-b5d4-06994cc5c124",
+      "id": "947a5ba0-b6a3-43ed-a939-9807998167b9",
+      "date": "Thu Nov 30 2023 02:04:35 GMT-0800 (Pacific Standard Time)"
+    }
+  ],
   "likes": [],
-  "comments": []
+  "comments": [
+  ]
 }

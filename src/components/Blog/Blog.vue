@@ -10,6 +10,8 @@ import BlogCommentSection from "@/components/Blog/BlogCommentSection.vue";
 import BlogActions from "@/components/Blog/BlogActions.vue";
 import BlogInfo from "@/components/Blog/BlogInfo.vue";
 import EditBlog from "@/components/Blog/EditBlog.vue";
+import { logged } from "@/assets/isLogged";
+import router from "@/router";
 
 const props = defineProps(["blog"]);
 const emit = defineEmits(["deleteBlog"]);
@@ -37,22 +39,26 @@ const comments = ref(null);
 const commentMessage = ref(null);
 const isCommenting = ref(0);
 const onLike = async () => {
-  if (isLiked.value) {
-    likeLoading.value = true;
-    await blogService.removeLike(likeId.value);
-    isLiked.value = !isLiked.value;
-    likesCount.value--;
-    likeLoading.value = false;
+  if (logged()) {
+    if (isLiked.value) {
+      likeLoading.value = true;
+      await blogService.removeLike(likeId.value);
+      isLiked.value = !isLiked.value;
+      likesCount.value--;
+      likeLoading.value = false;
+    } else {
+      likeLoading.value = true;
+      await blogService.like({
+        id: likeId.value,
+        blogId: props.blog.id,
+        userId: userStore.user.id,
+      });
+      isLiked.value = !isLiked.value;
+      likesCount.value++;
+      likeLoading.value = false;
+    }
   } else {
-    likeLoading.value = true;
-    await blogService.like({
-      id: likeId.value,
-      blogId: props.blog.id,
-      userId: userStore.user.id,
-    });
-    isLiked.value = !isLiked.value;
-    likesCount.value++;
-    likeLoading.value = false;
+    await router.push({ name: "login" });
   }
 };
 
@@ -66,22 +72,26 @@ const openComments = () => {
 };
 
 const addComment = async () => {
-  if (isCommenting.value === 0) {
-    isCommenting.value = 1;
-    if (!commentExists.value) {
+  if (logged()) {
+    if (isCommenting.value === 0) {
+      isCommenting.value = 1;
+      if (!commentExists.value) {
+        isCommenting.value = 0;
+        return;
+      }
+      await blogService.addComment({
+        id: uuidv4(),
+        authorId: userStore.user.id,
+        blogId: props.blog.id,
+        comment: commentMessage.value,
+        date: Date(),
+      });
+      commentMessage.value = null;
+      await getComments();
       isCommenting.value = 0;
-      return;
     }
-    await blogService.addComment({
-      id: uuidv4(),
-      authorId: userStore.user.id,
-      blogId: props.blog.id,
-      comment: commentMessage.value,
-      date: Date(),
-    });
-    commentMessage.value = null;
-    await getComments();
-    isCommenting.value = 0;
+  } else {
+    await router.push({ name: "login" });
   }
 };
 

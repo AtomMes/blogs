@@ -4,6 +4,7 @@ import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import Sidebar from "@/components/Sidebar.vue";
 import Feed from "@/components/Feed.vue";
+import { logged } from "@/assets/isLogged";
 
 const blogs = ref(null);
 const loading = ref(false);
@@ -23,7 +24,7 @@ watchEffect(async () => {
 </script>
 <template>
   <div class="flex w-full max-w-5xl mx-auto gap-6">
-    <div class="w-[45%] hidden md:block">
+    <div class="w-[45%] hidden md:block" v-if="logged()">
       <Sidebar />
     </div>
     <div class="min-w-[70%] w-full">
