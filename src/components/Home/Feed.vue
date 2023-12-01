@@ -1,6 +1,6 @@
 <script setup>
 import Blog from "@/components/Blog/Blog.vue";
-import LoadingCircle from "@/components/LoadingCircle.vue";
+import LoadingCircle from "@/components/Shared/LoadingCircle.vue";
 import { ref, watchEffect } from "vue";
 
 const props = defineProps(["loading", "blogs", "modelValue"]);
@@ -15,12 +15,13 @@ watchEffect(() => {
 
 <template>
   <input
+    :disabled="!blogs?.length"
     class="border w-full rounded-full mb-5 h-10 px-3.5"
     placeholder="Search a post"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
   />
-  <div v-if="!loading && !blogs.length" class="w-full pt-16">
+  <div v-if="!loading && !blogs?.length" class="w-full">
     <div class="w-fit mx-auto px-4 py-2 border border-gray-300 rounded flex">
       <p>
         There's no posts yet, go ahead and
@@ -35,11 +36,9 @@ watchEffect(() => {
   <div v-else-if="!loading && blogs">
     <div
       v-for="blog in blogs"
-      :class="
-        searchTextExists &&
+      :class="searchTextExists &&
         !blog.title?.toLowerCase().includes(modelValue?.toLowerCase()) &&
-        'hidden'
-      "
+        'hidden'"
     >
       <Blog :blog="blog" />
       <div
@@ -48,7 +47,7 @@ watchEffect(() => {
       />
     </div>
   </div>
-  <div v-else-if="loading" class="w-full pt-16">
+  <div v-else-if="loading" class="w-full">
     <LoadingCircle />
   </div>
 </template>

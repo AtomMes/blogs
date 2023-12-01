@@ -1,13 +1,14 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import { ref, watchEffect } from "vue";
-import userService from "@/services/userService";
-import blogService from "@/services/blogService";
-import Blog from "@/components/Blog/Blog.vue";
-import { useUserStore } from "@/stores/userStore";
-import EditProfile from "@/components/EditProfile.vue";
-import UserImage from "@/components/UserImage.vue";
-import LoadingCircle from "@/components/LoadingCircle.vue";
+import {useRoute, useRouter} from 'vue-router';
+import {ref, watchEffect} from 'vue';
+import userService from '@/services/userService';
+import blogService from '@/services/blogService';
+import {useUserStore} from '@/stores/userStore';
+import EditProfile from '@/components/Profile/EditProfile.vue';
+import LoadingCircle from '@/components/Shared/LoadingCircle.vue';
+import ProfileFeed from '@/components/Profile/ProfileFeed.vue';
+import ProfileUserData from '@/components/Profile/ProfileUserData.vue';
+import Error from '@/components/Shared/Error.vue';
 
 const userStore = useUserStore();
 const route = useRoute();
@@ -40,7 +41,7 @@ const updateUser = async () => {
       });
       loading.value = false;
     } catch (err) {
-      await router.push({ name: "home" });
+      await router.push({ name: 'home' });
     }
   }
   loading.value = false;
@@ -53,9 +54,9 @@ watchEffect(() => {
 });
 
 const logOut = () => {
-  router.push({ name: "login" });
+  router.push({ name: 'login' });
   userStore.logOut();
-  localStorage.removeItem("user");
+  localStorage.removeItem('user');
 };
 
 const toggleEdit = () => {
@@ -63,8 +64,8 @@ const toggleEdit = () => {
 };
 </script>
 <template>
-  <div>
-    <div class="mx-auto my-14 w-full max-w-5xl flex flex-col gap-8">
+  <div class="flex justify-center">
+    <div class="my-14 w-full max-w-5xl flex flex-col gap-2">
       <template v-if="!loading && user">
         <EditProfile
           :user="user"
@@ -72,76 +73,18 @@ const toggleEdit = () => {
           @updateUser="updateUser"
           v-if="myProfile && edit"
         />
-        <div
-          :class="myProfile && 'xs:!flex-row'"
-          class="flex flex-col justify-center items-center border-b pb-3"
-        >
-          <UserImage :img="user.img" class="w-48 rounded-[10px]" />
-          <div
-            :class="myProfile && 'xs:!text-left xs:!self-end'"
-            class="self-center text-center mb-2 ml-2 w-fit"
-          >
-            <p class="text-4xl font-bold text-black break-all">
-              {{ user.name }}
-            </p>
-            <p class="text-[18px]">{{ user.email }}</p>
-          </div>
-          <div
-            v-if="myProfile"
-            :class="myProfile && 'self-end xs:!justify-end'"
-            class="w-full mb-5 flex justify-center gap-3"
-          >
-            <button class="border px-3 py-1 rounded-[4px]" @click="toggleEdit">
-              Edit Profile
-            </button>
-            <button class="border px-3 py-1 rounded-[4px]" @click="logOut">
-              Log out
-            </button>
-          </div>
-        </div>
-        <template v-if="userBlogs && userBlogs.length">
-          <p class="text-[30px] px-3 font-bold break-all">
-            {{ user.name }}'s Blogs
-          </p>
-          <div class="flex flex-row flex-wrap gap-y-3">
-            <Blog
-              v-for="blog in userBlogs"
-              :blog="blog"
-              @deleteBlog="deleteBlog"
-            />
-          </div>
-        </template>
-        <template v-else-if="userBlogs?.length === 0">
-          <div
-            v-if="myProfile"
-            class="w-fit mx-auto px-4 py-2 border border-gray-300 rounded flex"
-          >
-            <p>
-              You don't have any posts yet, go ahead and
-              <router-link
-                :to="{ name: 'create-blog' }"
-                class="underline text-emerald-500 font-semibold"
-              >create one
-              </router-link>
-            </p>
-          </div>
-          <div
-            v-else
-            class="w-fit mx-auto px-4 py-2 border border-gray-300 rounded flex"
-          >
-            <p>
-              {{ user.name }} doesn't have any posts yet, check for
-              <router-link
-                :to="{ name: 'home' }"
-                class="underline text-emerald-500 font-semibold"
-              >other posts
-              </router-link>
-            </p>
-          </div>
-        </template>
-        <template v-else>
-          <LoadingCircle />
-        </template>
+        <ProfileUserData
+          :myProfile="myProfile"
+          :user="user"
+          @logout="logOut"
+          @toggleEdit="toggleEdit"
+        />
+        <ProfileFeed
+          :myProfile="myProfile"
+          :userBlogs="userBlogs"
+          :user="user"
+          @deleteBlog="deleteBlog"
+        />
       </template>
       <template v-else-if="loading && !user">
         <div class="w-full">
@@ -149,22 +92,8 @@ const toggleEdit = () => {
         </div>
       </template>
       <template v-else>
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 w-full -translate-y-1/2 flex flex-col items-center justify-center"
-        >
-          <p class="text-[50px] font-bold text-center">Not Found</p>
-          <div
-            class="h-60 w-60 flex items-center mt-8 mb-8 justify-center pb-1 rounded-full bg-red-600"
-          >
-            <p class="text-[110px] text-white">404</p>
-          </div>
-          <p>
-            The user you are looking for doesn't exist
-            <router-link to="/" class="text-emerald-500 underline font-semibold"
-            >go back
-            </router-link>
-          </p>
-        </div>
+        <Error title="Not Found" description="The user you are looking for doesn't exist" button-text="go back"
+               circle-text="404" />
       </template>
     </div>
   </div>

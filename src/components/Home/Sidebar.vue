@@ -1,5 +1,5 @@
 <script setup>
-import UserImage from "@/components/UserImage.vue";
+import UserImage from "@/components/Shared/UserImage.vue";
 import { useUserStore } from "@/stores/userStore";
 
 const userStore = useUserStore();

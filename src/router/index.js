@@ -5,9 +5,9 @@ import FullBlogPage from "@/views/FullBlogPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue";
 import ProfilePage from "@/views/ProfilePage.vue";
-import NotFound from "@/views/NotFound.vue";
+import NotFoundPage from "@/views/NotFoundPage.vue";
 import NetworkIssue from "@/views/NetworkIssue.vue";
-import { logged } from "@/assets/isLogged";
+import { logged } from "@/assets/functions/isLogged";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,15 +47,15 @@ const router = createRouter({
     {
       path: "/404",
       name: "404",
-      component: NotFound,
+      component: NotFoundPage,
     },
     {
       path: "/network-issue",
       name: "network-issue",
       component: NetworkIssue,
     },
-    { path: "/:pathMatch(.*)*", name: "404", component: NotFound },
-    { path: "/:pathMatch(.*)", name: "404", component: NotFound },
+    { path: "/:pathMatch(.*)*", name: "404", component: NotFoundPage },
+    { path: "/:pathMatch(.*)", name: "404", component: NotFoundPage },
   ],
 });
 

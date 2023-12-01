@@ -3,8 +3,8 @@ import { maxLength, required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { computed, reactive, toRefs } from "vue";
 import blogService from "@/services/blogService";
-import { blogDescriptionError, blogTitleError } from "@/assets/errorMessages";
-import BaseInput from "@/components/BaseInput.vue";
+import { blogDescriptionError, blogTitleError } from "@/assets/functions/errorMessages";
+import BaseInput from "@/components/Shared/BaseInput.vue";
 
 const props = defineProps(["blog", "editMode"]);
 const emit = defineEmits(["closeEditMode"]);
@@ -59,12 +59,13 @@ const save = async () => {
 </script>
 
 <template>
-  <div v-if="editMode">
     <div
       class="fixed top-0 z-20 left-0 flex items-center justify-center h-[100vh] w-[100vw] bg-[#00000044]"
       @click="$emit('closeEditMode')"
+      v-if="editMode"
     ></div>
     <div
+      v-if="editMode"
       class="bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl max-w-xl w-full"
     >
       <div class="flex px-4 justify-end w-full relative py-4 border-b">
@@ -77,7 +78,7 @@ const save = async () => {
           class="bg-gray-200 p-2 rounded-full transition hover:bg-gray-300"
           @click="emit('closeEditMode')"
         >
-          <img src="../../assets/close.png" alt="Close" class="w-5" />
+          <img src="../../assets/images/close.png" alt="Close" class="w-5" />
         </button>
       </div>
       <form
@@ -121,6 +122,5 @@ const save = async () => {
           </button>
         </div>
       </form>
-    </div>
   </div>
 </template>

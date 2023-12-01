@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView, useRouter } from "vue-router";
-import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/Navbar/NavBar.vue";
 import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();

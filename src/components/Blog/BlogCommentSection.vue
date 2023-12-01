@@ -1,17 +1,17 @@
 <script setup>
 import BlogComment from "@/components/Blog/BlogComment.vue";
 
-defineProps(["comments", "commentMessage", "commentExists"]);
-defineEmits(["update:commentMessage", "addComment"]);
+defineProps(["comments", "newComment", "commentExists", 'fullBlog']);
+defineEmits(["update:newComment", "addComment"]);
 </script>
 <template>
-  <div class="flex justify-between items-center border-b pb-1">
+  <div class="flex justify-between items-center border-b">
     <input
       class="w-full outline-none h-8 rounded-t-xl bg-inherit px-2 underline-none"
       placeholder="Leave a comment..."
-      @input="$emit('update:commentMessage', $event.target.value)"
+      @input="$emit('update:newComment', $event.target.value)"
       v-bind="$attrs"
-      :value="commentMessage"
+      :value="newComment"
       @keydown.enter="$emit('addComment')"
     />
     <button
@@ -22,7 +22,7 @@ defineEmits(["update:commentMessage", "addComment"]);
       Add
     </button>
   </div>
-  <div class="flex flex-col-reverse gap-1 max-h-[500px] overflow-auto">
+  <div class="flex flex-col-reverse gap-5 mt-5 max-h-[500px] overflow-auto">
     <BlogComment
       v-for="comment in comments"
       :comment="comment"

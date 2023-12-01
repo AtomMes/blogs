@@ -2,9 +2,9 @@
 import blogService from "@/services/blogService";
 import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import Sidebar from "@/components/Sidebar.vue";
-import Feed from "@/components/Feed.vue";
-import { logged } from "@/assets/isLogged";
+import Sidebar from "@/components/Home/Sidebar.vue";
+import Feed from "@/components/Home/Feed.vue";
+import { logged } from "@/assets/functions/isLogged";
 
 const blogs = ref(null);
 const loading = ref(false);
@@ -27,7 +27,7 @@ watchEffect(async () => {
     <div class="w-[45%] hidden md:block" v-if="logged()">
       <Sidebar />
     </div>
-    <div class="min-w-[70%] w-full">
+    <div class="min-w-[70%] w-full px-2">
       <Feed
         :loading="loading"
         :blogs="blogs"

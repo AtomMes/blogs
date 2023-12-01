@@ -1,24 +1,37 @@
 <script setup>
-import LoadingCircle from "@/components/LoadingCircle.vue";
-import CommentIcon from "@/icons/CommentIcon.vue";
-import BlogLike from "@/components/Blog/BlogLike.vue";
-import Edit from "@/icons/Edit.vue";
+import LoadingCircle from '@/components/Shared/LoadingCircle.vue';
+import CommentIcon from '@/icons/CommentIcon.vue';
+import BlogLike from '@/components/Blog/BlogLike.vue';
+import Edit from '@/icons/Edit.vue';
+import {computed} from 'vue';
 
-defineProps([
-  "likeLoading",
-  "isLiked",
-  "likesCount",
-  "visibleComments",
-  "commentsLength",
-  "blogId",
-  "profile",
-  "myProfile",
+const props = defineProps([
+  'likeLoading',
+  'isLiked',
+  'likesCount',
+  'visibleComments',
+  'commentsLength',
+  'blogId',
+  'profile',
+  'myProfile',
+  'fullBlog',
+  'myId',
+  'authorId'
 ]);
-const emit = defineEmits(["onLike", "openComments", "openEditMode"]);
+const emit = defineEmits(['onLike', 'openComments', 'openEditMode']);
+
+const canEdit = computed(() => {
+  console.log(props.blogId);
+  console.log(props.myId);
+  if (props.myProfile && !props.visibleComments) {
+    return true;
+  } else return !!(props.fullBlog && props.myId === props.authorId);
+});
+
 </script>
 
 <template>
-  <div class="flex w-full gap-1 pb-2 items-center">
+  <div class="flex w-full gap-1 items-center">
     <BlogLike
       v-if="!likeLoading"
       :disabled="likeLoading"
@@ -34,14 +47,13 @@ const emit = defineEmits(["onLike", "openComments", "openEditMode"]);
       class="flex items-center justify-center"
     >
       <CommentIcon
-        :fill="visibleComments ? '#10b981' : '#00000000'"
-        :stroke="visibleComments ? '#10b981' : '#00000050'"
+        :fill="fullBlog || visibleComments ? '#10b981' : '#00000000'"
+        :stroke="fullBlog || visibleComments ? '#10b981' : '#00000050'"
         class="transition"
-        :class="visibleComments && 'scale-105'"
       />
       <p
         :class="
-          visibleComments ? 'text-emerald-500 font-semibold' : 'text-gray-400'
+          fullBlog || visibleComments ? 'text-emerald-500 font-semibold' : 'text-gray-400'
         "
       >
         {{ (commentsLength && commentsLength) || 0 }}
@@ -53,7 +65,7 @@ const emit = defineEmits(["onLike", "openComments", "openEditMode"]);
       class="w-full h-7"
     />
     <button
-      v-show="myProfile"
+      v-show="canEdit"
       @click="emit('openEditMode')"
       class="self-center"
     >

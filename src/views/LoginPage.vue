@@ -1,18 +1,18 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
-import userService from "@/services/userService";
-import { useUserStore } from "@/stores/userStore";
-import router from "@/router";
-import { email, maxLength, minLength, required } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import BaseInput from "@/components/BaseInput.vue";
-import { mailError, passwordError } from "@/assets/errorMessages";
+import {computed, reactive, ref} from 'vue';
+import userService from '@/services/userService';
+import {useUserStore} from '@/stores/userStore';
+import router from '@/router';
+import {email, maxLength, minLength, required} from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core';
+import BaseInput from '@/components/Shared/BaseInput.vue';
+import {mailError, passwordError} from '@/assets/functions/errorMessages';
 
 const userState = useUserStore();
 
 const user = reactive({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 });
 const show = ref(false);
 const notUser = ref(false);
@@ -38,8 +38,8 @@ const onSubmit = async () => {
     await userService.login(user).then((res) => {
       if (res?.data[0]) {
         userState.setUser(res.data[0]);
-        localStorage.setItem("user", JSON.stringify(res.data[0]));
-        router.push({ name: "profile", params: { id: res.data[0].id } });
+        localStorage.setItem('user', JSON.stringify(res.data[0]));
+        router.push({ name: 'profile', params: { id: res.data[0].id } });
       } else {
         notUser.value = true;
       }
@@ -83,14 +83,14 @@ const passwordErrorMessage = computed(() => {
         <img
           @click="show = true"
           v-show="!show"
-          src="../assets/closedEye.png"
+          src="../assets/images/closedEye.png"
           alt="show"
           class="cursor-pointer w-[18px] mt-[3px] absolute right-2 top-[33px]"
         />
         <img
           @click="show = false"
           v-show="show"
-          src="../assets/openEye.png"
+          src="../assets/images/openEye.png"
           alt="show"
           class="cursor-pointer w-[18px] mt-[6px] absolute right-2 top-[33px]"
         />

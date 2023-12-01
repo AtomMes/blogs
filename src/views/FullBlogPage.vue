@@ -1,8 +1,8 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import { ref, watchEffect } from "vue";
-import blogService from "@/services/blogService";
-import Blog from "@/components/Blog/Blog.vue";
+import {useRoute, useRouter} from 'vue-router';
+import {ref, watchEffect} from 'vue';
+import blogService from '@/services/blogService';
+import Blog from '@/components/Blog/Blog.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -13,8 +13,8 @@ const blog = ref({
   authorId: null,
 });
 
-watchEffect(() => {
-  blogService.getById(route.params.id).then((res) => {
+watchEffect(async () => {
+  await blogService.getById(route.params.id).then((res) => {
     blog.value = res.data[0];
   });
 });
@@ -27,11 +27,11 @@ watchEffect(() => {
       </template>
       <template v-else>
         <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 w-full -translate-y-1/2 flex flex-col items-center justify-center"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 w-full -translate-y-1/2 flex flex-col gap-4 items-center justify-center"
         >
           <p class="text-[50px] font-bold text-center">Not Found</p>
           <div
-            class="h-60 w-60 flex items-center mt-8 mb-8 justify-center pb-1 rounded-full bg-red-600"
+            class="h-60 w-60 flex items-center justify-center rounded-full bg-red-600"
           >
             <p class="text-[110px] text-white">404</p>
           </div>

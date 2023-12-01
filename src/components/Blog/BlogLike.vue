@@ -13,7 +13,6 @@ defineEmits(["onLike"]);
       :fill="isLiked ? '#10b981' : '#00000000'"
       :stroke="isLiked ? '#10b981' : '#00000050'"
       class="transition"
-      :class="isLiked && 'scale-105'"
     />
     <p :class="isLiked ? 'text-emerald-500 font-semibold' : 'text-gray-400'">
       {{ likesCount || 0 }}
